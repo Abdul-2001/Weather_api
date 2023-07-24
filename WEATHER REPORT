@@ -1,0 +1,74 @@
+
+def get_weather_data(date):
+    params = {
+        'date': date,
+        'appid': API_KEY
+    }
+    response = requests.get(API_URL, params=params)
+    data = response.json()
+    temperature = data.get('temperature')
+    return temperature
+
+def get_wind_speed_data(date):
+    params = {
+        'date': date,
+        'appid': API_KEY
+    }
+    response = requests.get(API_URL, params=params)
+    data = response.json()
+    wind_speed = data.get('wind').get('speed')
+    return wind_speed
+
+def get_pressure_data(date):
+    params = {
+        'date': date,
+        'appid': API_KEY
+    }
+    response = requests.get(API_URL, params=params)
+    data = response.json()
+    pressure = data.get('pressure')
+    return pressure
+
+def main():
+    while True:
+        print("Options:")
+        print("1. Get weather")
+        print("2. Get Wind Speed")
+        print("3. Get Pressure")
+        print("0. Exit")
+
+        choice = input("Enter your choice: ")
+
+        if choice == '1':
+            date = input("Enter the date (YYYY-MM-DD): ")
+            temperature = get_weather_data(date)
+            if temperature is not None:
+                print(f"Temperature on {date}: {temperature}°C\n")
+            else:
+                print("Data not available for the given date.\n")
+
+        elif choice == '2':
+            date = input("Enter the date (YYYY-MM-DD): ")
+            wind_speed = get_wind_speed_data(date)
+            if wind_speed is not None:
+                print(f"Wind speed on {date}: {wind_speed} m/s\n")
+            else:
+                print("Data not available for the given date.\n")
+
+        elif choice == '3':
+            date = input("Enter the date (YYYY-MM-DD): ")
+            pressure = get_pressure_data(date)
+            if pressure is not None:
+                print(f"Pressure on {date}: {pressure} hPa\n")
+            else:
+                print("Data not available for the given date.\n")
+
+        elif choice == '0':
+            print("Exiting the program.")
+            break
+
+        else:
+            print("Invalid choice. Please try again.\n")
+
+if __name__ == "__main__":
+    main()
